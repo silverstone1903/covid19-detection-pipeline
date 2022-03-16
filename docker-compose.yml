@@ -1,0 +1,44 @@
+version: "3"
+
+services:
+  streamlit:
+    image: silverstone1903/streamlit_tf:latest
+    # image: streamlit_tf
+    # build:
+    #   context: ./
+    #   dockerfile: ./frontend/Dockerfile
+    depends_on:
+      - fastapi
+    ports:
+      - 8501:8501
+    networks:
+      net:
+    container_name: streamlit_container
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo_user
+      MONGO_INITDB_ROOT_PASSWORD: mongo_password
+    container_name: mongo_container
+    ports:
+      - 27017:27017
+    networks:
+      - net
+  fastapi:
+    image: silverstone1903/fastapi_backend:latest
+    # image: fastapi
+    # build:
+    #   context: ./
+    #   dockerfile: ./backend/Dockerfile
+    depends_on:
+      - mongo
+    ports:
+      - 8000:8000
+    networks:
+      net:
+    container_name: fastapi_container
+
+networks:
+  net:
+    driver: bridge

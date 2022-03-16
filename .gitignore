@@ -1,0 +1,10 @@
+.DS_Store
+*/.DS_Store
+*.h5
+*.whl
+*.ipynb
+data/train/*
+data/test/*
+!data/train/*.gitkeep
+!data/test/*.gitkeep
+*__init__.py
